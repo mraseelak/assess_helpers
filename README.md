@@ -1,5 +1,5 @@
 # TestHelpers
-This is a gem to consolidate all the test related work for BIAD group. This gem consolidates all the boilerplate code, used in 
+This is a gem to consolidate all the test related work for mraseelak group. This gem consolidates all the boilerplate code, used in 
 testing this freeing up the developer from writing them. 
 
 ## Installation
@@ -24,7 +24,7 @@ Or install it yourself as:
 In the gemspec require your gem
 
 ```docker
-gem 'test_helpers', git: 'https://github.com/BIAD/helpersDeTesting.git'
+gem 'assess_helpers', git: 'https://github.com/mraseelak/helpersDeTesting.git'
 ```
 #### Auth0
  The ideal way to use this gem would be to create the Auth0 object, which can then be used with username and password to get the token
@@ -311,7 +311,7 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 To install this gem onto your local machine, run `bundle exec rake install`.
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/BIAD/test_helpers. Pull request should have proper commit message.  
+Bug reports and pull requests are welcome on GitHub at https://github.com/mraseelak/assess_helpers. Pull request should have proper commit message.  
 
 ### Note:
 Any changes to `/bin` or `/lib` folder means the version has to be updated and changelog listed with the changes made. 
@@ -326,4 +326,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the TestHelpers project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/test_helpers/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the TestHelpers project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/assess_helpers/blob/master/CODE_OF_CONDUCT.md).
