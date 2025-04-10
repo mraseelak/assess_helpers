@@ -1,4 +1,4 @@
-# TestHelpers
+# AssessHelpers
 This is a gem to consolidate all the test related work for mraseelak group. This gem consolidates all the boilerplate code, used in 
 testing this freeing up the developer from writing them. 
 
@@ -7,7 +7,7 @@ testing this freeing up the developer from writing them.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'helpersDeTesting'
+gem 'assess_helpers'
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install helpersDeTesting
+    $ gem install assess_helpers
 
 ## Usage
 
@@ -24,13 +24,13 @@ Or install it yourself as:
 In the gemspec require your gem
 
 ```docker
-gem 'assess_helpers', git: 'https://github.com/mraseelak/helpersDeTesting.git'
+gem 'assess_helpers', git: 'https://github.com/mraseelak/assess_helpers.git'
 ```
 #### Auth0
  The ideal way to use this gem would be to create the Auth0 object, which can then be used with username and password to get the token
 
  ```ruby
-auth0_obj = TestHelpers::Auth0Token.new(
+auth0_obj = AssessHelpers::Auth0Token.new(
           connection: "<connection_string>",
           grant_type: "password",
           scope: "openid email roles",
@@ -47,7 +47,7 @@ token = auth0_obj.get_token('<username>', 'password').id_token
 ```
 Alternately,
 ```ruby
-token = TestHelpers::Auth0Token.new(
+token = AssessHelpers::Auth0Token.new(
                   connection: "<connection_string>",
                   grant_type: "password",
                   scope: "openid email roles",
@@ -61,14 +61,14 @@ token = TestHelpers::Auth0Token.new(
 #### Okta
 To retrieve the okta token, you need to first configure the issuer, client and the client secret, like shown below
 ```ruby
-TestHelpers::Okta.configure!(
+AssessHelpers::Okta.configure!(
   issuer: "<issuer url>"
 )
 ```
 
 Now generate the token for a username and password like so
 ```ruby
-TestHelpers::Okta.user_sign_in(
+AssessHelpers::Okta.user_sign_in(
   username: "<username>", 
   password: "<password>", 
   client_id: "<client_id>",
@@ -79,11 +79,11 @@ TestHelpers::Okta.user_sign_in(
 ```
 To retrieve information
 ```ruby
-id_token = TestHelpers::Okta.id_token
-access_token = TestHelpers::Okta.access_token
+id_token = AssessHelpers::Okta.id_token
+access_token = AssessHelpers::Okta.access_token
 
 # For other details
-parsed_response = TestHelpers::Okta.response.parsed_response
+parsed_response = AssessHelpers::Okta.response.parsed_response
 
 ["access_token", "token_type", "expires_in", "scope", "id_token"].each do |key|
   puts "#{key}: #{parsed_response[key]}"
@@ -92,7 +92,7 @@ end
 ```
 When generating the okta token for client sign in we use
 ```ruby
-TestHelpers::Okta.client_sign_in(
+AssessHelpers::Okta.client_sign_in(
   client_id: "<client_id>",
   client_secret: "<client_secret>",
   scope: "<scope>", # [optional, default is openid]
@@ -109,7 +109,7 @@ The generic form is below
 ```ruby
 GET
 
-response = TestHelpers::API::Request.get(
+response = AssessHelpers::API::Request.get(
                url: "<rest api url>",
                id_token: "<id token retrieved from Auth0>",
                headers: { key: "<value>"} # Any additional headers needed can be provided as a hash
@@ -132,17 +132,17 @@ This Code can be used to invoke lambda client that will in turn call the url of 
 First you need to configure the lambda client. The generic client being used currently is `pmacc-common-bdd-proxy-client`
 
 ```ruby
-TestHelpers::API::Proxy.configure!(secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], session_token: ENV['AWS_SESSION_TOKEN'], function_name: <lambda_client to be used for your test or 'pmacc-common-bdd-proxy-client'>)
+AssessHelpers::API::Proxy.configure!(secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], session_token: ENV['AWS_SESSION_TOKEN'], function_name: <lambda_client to be used for your test or 'pmacc-common-bdd-proxy-client'>)
 ```
 
 Then make the call to your lambda as shown below
 
 ```ruby
 POST, PUT, PATCH, DELETE (if there is a payload)
-response = TestHelpers::API::Proxy.post(url: <url to call>, payload_string: <payload as a string>, headers: <headers as a hash; nil if not sending headers>)
+response = AssessHelpers::API::Proxy.post(url: <url to call>, payload_string: <payload as a string>, headers: <headers as a hash; nil if not sending headers>)
 
 GET, DELETE(if there is no payload)
-response = TestHelpers::API::Proxy.get(url: <url to call>, headers: <headers as a hash or nil if not sending headers>)
+response = AssessHelpers::API::Proxy.get(url: <url to call>, headers: <headers as a hash or nil if not sending headers>)
 ```
 
 Make sure that the payload is submitted in the form of a string. So if it is a hash then convert it into a string by using `to_json` function.
@@ -151,9 +151,9 @@ Make sure that the payload is submitted in the form of a string. So if it is a h
 The response is generic in the return format
 ```ruby
 response.class
-        => TestHelpers::API::Response
+        => AssessHelpers::API::Response
 
-TestHelpers::API::Response.instance_methods(false)
+AssessHelpers::API::Response.instance_methods(false)
         => [:message, :backtrace, :status, :backtrace=, :http_code, :message=, :status=, :http_code=]
 
 response.message # returns the response received
@@ -169,7 +169,7 @@ response.backtrace # If there is an error in the call capture the backtrace
 The parser provide convenient way to parse different format or files
 ```ruby
 XLSX Parser:
-xlsx = TestHelpers::Parser::Xlsx.new('your_file_path')
+xlsx = AssessHelpers::Parser::Xlsx.new('your_file_path')
 puts xlsx.table_hashes
 ```
 
@@ -177,7 +177,7 @@ puts xlsx.table_hashes
 This module provides the functionality to read an email. Currently only pop3 email is supported. Future enhancement to follow. 
 To start
 ```ruby
-mail = TestHelpers::Email.new(address: 'outlook.office365.com', port: 995, user_name: 'abcd@outlook.com', password:'password', method: :pop3)
+mail = AssessHelpers::Email.new(address: 'outlook.office365.com', port: 995, user_name: 'abcd@outlook.com', password:'password', method: :pop3)
 ```
 :warning: The values `address`, `port` and `method` have the default values shown above.
 
@@ -205,7 +205,7 @@ returns an Array of mails with the search term in the body.
 #### Dynamo
 To create client
 ```ruby
-client = TestHelpers::AWS::DynamoDB.new(
+client = AssessHelpers::AWS::DynamoDB.new(
   endpoint: "<dyanamodb_endpoint>",
   region: "<region>",
   access_key_id: "<aws_access_key_id>",
@@ -228,7 +228,7 @@ client.delete_item(table_name, query_opts)
 #### S3
 To instantiate client
 ```ruby
-s3_client = TestHelpers::AWS::S3.new(
+s3_client = AssessHelpers::AWS::S3.new(
   region: "<region>",
   access_key_id: "<aws_access_key_id>",
   secret_access_key: "<aws_secret_access_key>",
@@ -257,7 +257,7 @@ s3_client.download_files("<bucket_name>", "<key>", "<download target on local ma
 #### SecretsManager
 To instantiate client
 ```ruby
-secrets_client = TestHelpers::AWS::SecretsManager.new(
+secrets_client = AssessHelpers::AWS::SecretsManager.new(
   endpoint: "<dyanamodb_endpoint>",
   region: "<region>",
   access_key_id: "<aws_access_key_id>",
@@ -316,7 +316,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/mrasee
 ### Note:
 Any changes to `/bin` or `/lib` folder means the version has to be updated and changelog listed with the changes made. 
 
-    Location of version: lib/helpersDetesting/version.rb
+    Location of version: lib/assess_helpers/version.rb
     Location of changelog: Changelog.md 
 
 Once the version has been updated and pushed to master, a new tag has to be released. All depending projects must update the tag being pulled. 
@@ -326,4 +326,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the TestHelpers project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/assess_helpers/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the AssessHelpers project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/assess_helpers/blob/master/CODE_OF_CONDUCT.md).
