@@ -2,17 +2,17 @@
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'test_helpers/version'
+require 'assess_helpers/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'test_helpers'
-  spec.version       = TestHelpers::VERSION.version
+  spec.name          = 'assess_helpers'
+  spec.version       = AssessHelpers::VERSION.version
   spec.authors       = ['Raseel Mohamed']
   spec.email         = ['mraseelak@gmail.com']
 
   spec.summary       = 'Gem to help in Testing BIAD applications'
   spec.description   = 'This gem will collect and act as a single resource for all the helper methods used in testing. This provides advantage of reusability to all testing. '
-  spec.homepage      = 'https://github.com/mraseelak/helpersDeTesting'
+  spec.homepage      = 'https://github.com/mraseelak/assess_helpers'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
